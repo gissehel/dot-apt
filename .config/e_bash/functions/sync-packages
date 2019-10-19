@@ -1,0 +1,8 @@
+function sync-packages {
+    packages_to_install=$(cat "$E_BASH_DIR"/packages-to-install/* 2>/dev/null)
+    packages_to_remove=$(cat "$E_BASH_DIR"/packages_to_remove/* 2>/dev/null)
+    # echo "to remove [${packages_to_remove}]"
+    # echo "to install [${packages_to_install}]"
+    ensure-packages-removed "${packages_to_remove}"
+    ensure-packages-installed "${packages_to_install}"
+}

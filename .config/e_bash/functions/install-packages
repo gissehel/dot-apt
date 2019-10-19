@@ -1,0 +1,4 @@
+function install-packages {
+    packages=$(echo $@)
+    sudo apt install -y ${packages}
+}

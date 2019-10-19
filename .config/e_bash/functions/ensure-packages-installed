@@ -1,0 +1,9 @@
+function ensure-packages-installed {
+    packages=$(echo $@)
+    packages_to_install=""
+    for package in ${packages}
+    do
+        (dpkg -l "${package}" | grep "^ii" >/dev/null 2>&1) || packages_to_install="${packages_to_install} ${package}"
+    done
+    [ -n "${packages_to_install}" ] && sudo apt update -y && sudo apt install -y ${packages_to_install}
+}
