@@ -1,9 +1,6 @@
 function ensure-packages-removed {
     packages=$(echo $@)
     packages_to_remove=""
-    for package in ${packages}
-    do
-        (dpkg -l "${package}" | grep "^ii" >/dev/null 2>&1) && packages_to_remove="${packages_to_remove} ${package}"
-    done
+    [ $(dpkg -l ${packages} 2>&1 >/dev/null | wc -l) == "0" ] && packages_to_remove=${packages}
     [ -n "${packages_to_remove}" ] && sudo apt remove -y ${packages_to_remove}
 }
