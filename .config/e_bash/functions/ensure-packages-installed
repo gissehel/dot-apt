@@ -1,6 +1,10 @@
 function ensure-packages-installed {
     packages=$(echo $@)
     packages_to_install=""
-    [ $(dpkg -l ${packages} 2>&1 >/dev/null | wc -l) == "0" ] || packages_to_install=${packages}
-    [ -n "${packages_to_install}" ] && sudo apt update -y && sudo apt install -y ${packages_to_install}
+    [ $((dpkg -l ${packages} | tail -n +6 | grep -v "^ii") 2>&1 | wc -l) == "0" ] || packages_to_install=${packages}
+    [ -n "${packages_to_install}" ] && {
+        echo "Installing ${packages_to_install} ..."
+        sudo apt update -y
+        sudo apt install -y ${packages_to_install}
+    }
 }
