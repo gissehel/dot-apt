@@ -1,3 +1,4 @@
 function apt-repos {
    include-all-in-dir "${E_BASH_DIR}/apt-repos"
+   sync-packages
 }
